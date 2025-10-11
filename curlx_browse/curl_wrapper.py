@@ -56,14 +56,11 @@ class CurlWrapper:
 
         parsed = urlparse(proxy_url)
 
-        # 代理地址
         self.setopt(curl, lib.CURLOPT_PROXY, parsed.hostname)
 
-        # 代理端口
         if parsed.port:
             self.setopt(curl, lib.CURLOPT_PROXYPORT, parsed.port)
 
-        # 代理类型
         if parsed.scheme == 'http':
             self.setopt(curl, lib.CURLOPT_PROXYTYPE, lib.CURLPROXY_HTTP)
         elif parsed.scheme in ('socks4', 'socks4a'):
@@ -73,7 +70,6 @@ class CurlWrapper:
         elif parsed.scheme == 'socks5h':
             self.setopt(curl, lib.CURLOPT_PROXYTYPE, lib.PROXYTYPE_SOCKS5_HOSTNAME)
 
-        # 用户名密码
         if parsed.username or parsed.password:
             userpwd = f"{parsed.username or ''}:{parsed.password or ''}"
             self.setopt(curl, lib.CURLOPT_PROXYUSERPWD, userpwd)

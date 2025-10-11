@@ -117,3 +117,16 @@ def test_post_file(curl_session):
     assert resp.status_code == 200
     json_response = resp.json()
     print(json_response)
+
+def test_ordered_headers(curl_session):
+    curl_session.set_profile(profile_name='chrome122')
+    r1 = curl_session.get("https://httpbin.org/headers")
+    print("=== Default Headers ===")
+    print(r1.text)
+
+    r2 = curl_session.get("https://httpbin.org/headers", headers={
+        "User-Agent": "Custom-UA/2.0",
+        "X-Test": "yes"
+    })
+    print("\n=== Custom Headers ===")
+    print(r2.text)
